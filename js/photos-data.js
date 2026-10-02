@@ -11,6 +11,7 @@
 
    Photos appear in the order they are listed here. */
 window.PHOTOS = [
+  { src: 'from-tuoitre-news-article.jpg', alt: 'Son teaching for VietAI', caption: 'https://tuoitre.vn/chay-cung-tri-tue-nhan-tao-20181221082128707.htm' },
   { src: 'placeholder-01.svg', alt: 'Placeholder landscape in blue tones', caption: 'Placeholder photo 1' },
   { src: 'placeholder-02.svg', alt: 'Placeholder landscape in orange tones', caption: 'Placeholder photo 2' },
   { src: 'placeholder-03.svg', alt: 'Placeholder landscape in green tones', caption: 'Placeholder photo 3' },
@@ -19,5 +20,4 @@ window.PHOTOS = [
   { src: 'placeholder-06.svg', alt: 'Placeholder landscape in teal tones', caption: 'Placeholder photo 6' },
   { src: 'placeholder-07.svg', alt: 'Placeholder landscape in golden tones', caption: 'Placeholder photo 7' },
   { src: 'placeholder-08.svg', alt: 'Placeholder landscape in indigo tones', caption: 'Placeholder photo 8' },
-  { src: 'placeholder-09.svg', alt: 'Placeholder landscape in slate tones', caption: 'Placeholder photo 9' }
 ];
