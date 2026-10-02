@@ -88,6 +88,15 @@
     return Math.min(1, Math.max(0, p));
   }
 
+  /* True when a coordinate has no usable spread: its range is lost in the
+     rounding noise of its own magnitude (or its sum of squares underflows).
+     The test is relative, so the answer does not depend on the units or the
+     offset of the data. */
+  function hasNoSpread(min, max, sumOfSquares) {
+    var magnitude = Math.max(Math.abs(min), Math.abs(max));
+    return max - min <= 1e-12 * magnitude || !(sumOfSquares > 0);
+  }
+
   /* Ordinary least squares fit of y = intercept + slope * x.
 
      Returns an object whose `status` is one of
@@ -123,9 +132,19 @@
     var i;
     var sumX = 0;
     var sumY = 0;
+    var minX = Infinity;
+    var maxX = -Infinity;
+    var minY = Infinity;
+    var maxY = -Infinity;
     for (i = 0; i < n; i++) {
-      sumX += points[i].x;
-      sumY += points[i].y;
+      var x = points[i].x;
+      var y = points[i].y;
+      sumX += x;
+      sumY += y;
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
+      if (y < minY) minY = y;
+      if (y > maxY) maxY = y;
     }
     var meanX = sumX / n;
     var meanY = sumY / n;
@@ -148,15 +167,13 @@
       sxy += dx * dy;
     }
 
-    /* Tolerances absorb floating-point noise, e.g. identical x-values whose
-       mean is not exactly representable. */
-    var scaleX = Math.max(1, meanX * meanX);
-    var scaleY = Math.max(1, meanY * meanY);
-    if (sxx <= 1e-12 * n * scaleX) {
+    /* Identical x-values can still leave a tiny non-zero sxx, because their
+       mean is not always exactly representable; hasNoSpread absorbs that. */
+    if (hasNoSpread(minX, maxX, sxx)) {
       result.status = 'vertical';
       return result;
     }
-    var flat = syy <= 1e-12 * n * scaleY;
+    var flat = hasNoSpread(minY, maxY, syy);
 
     var slope = flat ? 0 : sxy / sxx;
     var intercept = meanY - slope * meanX;

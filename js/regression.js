@@ -196,6 +196,9 @@
   function pushUndo(state) {
     undoStack.push(state || snapshot());
     if (undoStack.length > 100) undoStack.shift();
+    /* Any other change ends a run of arrow-key nudges, so the next nudge
+       gets an undo step of its own. */
+    lastNudge = { id: null, time: 0 };
   }
 
   /* ---------- Drawing ---------- */
@@ -337,8 +340,9 @@
     if (fit.df <= 0) {
       return 'Two points always lie exactly on a line, so R² = 1 and no degrees of freedom are left to test the slope. Add a third point to get a p-value.';
     }
-    var percent = Math.round(fit.r2 * 100);
-    var first = 'The line explains ' + percent + '% of the variation in y (R² = ' + fmt(fit.r2, 3) + '). ';
+    /* One decimal, so the percentage always agrees with the three-decimal R²
+       next to it (a whole number would turn R² = 0.996 into "100%"). */
+    var first = 'The line explains ' + fmt(fit.r2 * 100, 1) + '% of the variation in y (R² = ' + fmt(fit.r2, 3) + '). ';
     var pText = fit.p < 0.0001 ? 'p < 0.0001' : 'p = ' + fit.p.toFixed(4);
     if (fit.p < 0.05) {
       return first + 'With ' + pText + ', the slope is statistically significant at the 5% level.';
@@ -546,6 +550,8 @@
   function undo() {
     if (undoStack.length === 0) return;
     points = undoStack.pop();
+    /* The step a run of nudges was sharing has just been used up. */
+    lastNudge = { id: null, time: 0 };
     hideTip();
     render(true);
   }
@@ -571,11 +577,6 @@
         moved: false,
         before: snapshot()
       };
-      try {
-        svg.setPointerCapture(event.pointerId);
-      } catch (e) {
-        /* capture is an optimisation; dragging still works inside the chart */
-      }
       event.preventDefault();
     } else if (toData(event).inside) {
       press = {
@@ -584,6 +585,15 @@
         startX: event.clientX,
         startY: event.clientY
       };
+    }
+    if (!press) return;
+    /* Capture both kinds of press. Without it, a mouse button released
+       outside the chart never reports back, the press is never cleared, and
+       the next click on the chart is swallowed. */
+    try {
+      svg.setPointerCapture(event.pointerId);
+    } catch (e) {
+      /* without capture, the press still works while it stays inside the chart */
     }
   });
 
@@ -742,11 +752,15 @@
 
     var point = findPoint(id);
     if (!point) return;
+    var x = round2(clamp(point.x + dx, 0, X_MAX));
+    var y = round2(clamp(point.y + dy, 0, Y_MAX));
+    /* Already against the edge of the chart: nothing to move or to undo. */
+    if (x === point.x && y === point.y) return;
     var now = Date.now();
     if (lastNudge.id !== id || now - lastNudge.time > 1500) pushUndo();
     lastNudge = { id: id, time: now };
-    point.x = round2(clamp(point.x + dx, 0, X_MAX));
-    point.y = round2(clamp(point.y + dy, 0, Y_MAX));
+    point.x = x;
+    point.y = y;
     tipPointId = id;
     tip.setAttribute('data-mode', 'focus');
     render(true);
