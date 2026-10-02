@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" width="1600" height="1200" role="img" aria-label="Placeholder photo 9">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="hsl(205 14% 78%)"/>
+      <stop offset="1" stop-color="hsl(233 24% 92%)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#sky)"/>
+  <circle cx="808" cy="242" r="189" fill="#fff" opacity="0.18"/>
+  <circle cx="808" cy="242" r="90" fill="#fff" opacity="0.85"/>
+  <path d="M0 1200 L0 773.2 C114.3 773.2 114.3 715.1 228.6 715.1 C342.9 715.1 342.9 728.1 457.1 728.1 C571.4 728.1 571.4 685.6 685.7 685.6 C800.0 685.6 800.0 699.6 914.3 699.6 C1028.6 699.6 1028.6 617.8 1142.9 617.8 C1257.1 617.8 1257.1 655.9 1371.4 655.9 C1485.7 655.9 1485.7 710.7 1600.0 710.7 L1600 1200 Z" fill="hsl(205 8% 62%)"/>
+  <path d="M0 1200 L0 844.6 C133.3 844.6 133.3 875.6 266.7 875.6 C400.0 875.6 400.0 833.1 533.3 833.1 C666.7 833.1 666.7 834.0 800.0 834.0 C933.3 834.0 933.3 756.4 1066.7 756.4 C1200.0 756.4 1200.0 766.7 1333.3 766.7 C1466.7 766.7 1466.7 834.3 1600.0 834.3 L1600 1200 Z" fill="hsl(205 8% 47%)"/>
+  <path d="M0 1200 L0 1008.0 C160.0 1008.0 160.0 984.8 320.0 984.8 C480.0 984.8 480.0 898.9 640.0 898.9 C800.0 898.9 800.0 981.8 960.0 981.8 C1120.0 981.8 1120.0 941.2 1280.0 941.2 C1440.0 941.2 1440.0 1048.8 1600.0 1048.8 L1600 1200 Z" fill="hsl(205 8% 33%)"/>
+  <text x="1552" y="1156" text-anchor="end" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="34" font-weight="600" letter-spacing="3" fill="#fff" opacity="0.75">PLACEHOLDER 09</text>
+</svg>

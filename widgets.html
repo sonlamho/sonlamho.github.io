@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Teaching widgets — Hồ Lam Sơn</title>
+  <meta name="description" content="Interactive teaching widgets for statistics and data science, including a click-to-edit simple linear regression chart.">
+  <meta name="author" content="Hồ Lam Sơn">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <script>
+    try {
+      var savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      }
+    } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="index.html" lang="vi">Hồ Lam Sơn</a>
+      <nav class="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="index.html">CV</a></li>
+          <li><a href="photos.html">Photos</a></li>
+          <li><a href="widgets.html" aria-current="page">Teaching widgets</a></li>
+        </ul>
+      </nav>
+      <button class="theme-toggle" type="button" aria-label="Switch theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="container">
+      <div class="page-head">
+        <h1>Teaching widgets</h1>
+        <p class="lead">Small interactive tools for building intuition in statistics and data science. They run entirely in your browser.</p>
+      </div>
+
+      <section class="widget" id="regression" aria-labelledby="rg-title">
+        <div class="widget-head">
+          <h2 id="rg-title">Simple linear regression</h2>
+          <p>
+            Click anywhere on the chart to add a point, click a point to remove it, or drag a
+            point to move it. The least-squares line and its statistics are refitted after
+            every change.
+          </p>
+        </div>
+
+        <noscript><p class="chart-hint">This widget needs JavaScript to be enabled.</p></noscript>
+
+        <div class="toolbar">
+          <div class="toolbar-group" role="group" aria-label="Load one of Anscombe’s four datasets">
+            <span class="toolbar-label">Anscombe’s quartet</span>
+            <button class="button small" type="button" data-dataset="anscombe1" aria-label="Load Anscombe dataset 1">I</button>
+            <button class="button small" type="button" data-dataset="anscombe2" aria-label="Load Anscombe dataset 2">II</button>
+            <button class="button small" type="button" data-dataset="anscombe3" aria-label="Load Anscombe dataset 3">III</button>
+            <button class="button small" type="button" data-dataset="anscombe4" aria-label="Load Anscombe dataset 4">IV</button>
+          </div>
+          <div class="toolbar-group">
+            <button class="button small" type="button" id="rg-random">Random sample</button>
+            <button class="button small" type="button" id="rg-undo">Undo</button>
+            <button class="button small" type="button" id="rg-clear">Clear</button>
+          </div>
+          <label class="check">
+            <input type="checkbox" id="rg-residuals">
+            Show residuals
+          </label>
+        </div>
+
+        <div class="widget-grid">
+          <div>
+            <ul class="legend" aria-label="Legend">
+              <li><span class="key-dot" aria-hidden="true"></span>Data point</li>
+              <li><span class="key-line" aria-hidden="true"></span>Least-squares line</li>
+              <li id="rg-residuals-key" hidden><span class="key-residual" aria-hidden="true"></span>Residual</li>
+            </ul>
+            <div class="chart-wrap" id="rg-wrap">
+              <svg class="rg-chart" id="rg-chart" role="group" aria-label="Scatter plot with fitted regression line. x runs from 0 to 20 and y from 0 to 14. The data table below the chart lists every point."></svg>
+              <div class="chart-tip" id="rg-tip" hidden></div>
+            </div>
+            <p class="chart-hint" id="rg-hint"></p>
+          </div>
+
+          <div>
+            <div class="equation">
+              <span class="eq-label">Fitted line</span>
+              <span id="rg-equation">—</span>
+            </div>
+            <dl class="stats">
+              <div class="stat key"><dt>R²</dt><dd id="rg-r2">—</dd></div>
+              <div class="stat key"><dt>p-value (slope)</dt><dd id="rg-p">—</dd></div>
+              <div class="stat"><dt>Slope</dt><dd id="rg-slope">—</dd></div>
+              <div class="stat"><dt>Intercept</dt><dd id="rg-intercept">—</dd></div>
+              <div class="stat"><dt>Correlation r</dt><dd id="rg-r">—</dd></div>
+              <div class="stat"><dt>Points n</dt><dd id="rg-n">0</dd></div>
+              <div class="stat"><dt>Std. error of slope</dt><dd id="rg-slope-se">—</dd></div>
+              <div class="stat"><dt>Residual std. error</dt><dd id="rg-residual-se">—</dd></div>
+            </dl>
+            <p class="interpretation" id="rg-interpretation"></p>
+            <p class="visually-hidden" id="rg-live" aria-live="polite"></p>
+          </div>
+        </div>
+
+        <details>
+          <summary>Data table and exact entry</summary>
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">x</th>
+                  <th scope="col">y</th>
+                  <th scope="col">Fitted ŷ</th>
+                  <th scope="col">Residual</th>
+                  <th scope="col"><span class="visually-hidden">Remove</span></th>
+                </tr>
+              </thead>
+              <tbody id="rg-table-body"></tbody>
+            </table>
+          </div>
+          <form class="add-form" id="rg-add-form">
+            <label>x (0 to 20)
+              <input type="number" id="rg-add-x" min="0" max="20" step="0.01" inputmode="decimal" required>
+            </label>
+            <label>y (0 to 14)
+              <input type="number" id="rg-add-y" min="0" max="14" step="0.01" inputmode="decimal" required>
+            </label>
+            <button class="button small" type="submit">Add point</button>
+          </form>
+        </details>
+
+        <details>
+          <summary>What the numbers mean</summary>
+          <div class="notes">
+            <p><strong>Fitted line.</strong> The line ŷ = b₀ + b₁x that minimises the sum of squared residuals, where a residual is the vertical distance between a point and the line. Turn on “Show residuals” to see them.</p>
+            <p><strong>R².</strong> The share of the variation in y that the line accounts for: 1 − (sum of squared residuals) ÷ (total sum of squares). For a straight-line fit it equals the square of the correlation r.</p>
+            <p><strong>p-value.</strong> A two-sided t-test of the hypothesis that the true slope is zero, using t = b₁ ÷ SE(b₁) with n − 2 degrees of freedom. A small value means a slope this far from zero would be unlikely if x and y were unrelated. It needs at least three points.</p>
+            <p><strong>Standard errors.</strong> The residual standard error is √(SSE ÷ (n − 2)), the typical size of a residual. The standard error of the slope divides it by √Σ(x − x̄)², so points spread widely along x pin the slope down more tightly.</p>
+            <p><strong>Things to try.</strong> Load the four datasets of Anscombe’s quartet: their statistics are almost identical while the pictures differ completely. Then drag a single point far from the rest and watch how much one outlier can move the line.</p>
+          </div>
+        </details>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>© 2026 <span lang="vi">Hồ Lam Sơn</span></span>
+      <span>Last updated October 2026</span>
+    </div>
+  </footer>
+
+  <script src="js/site.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/regression.js"></script>
+</body>
+</html>
