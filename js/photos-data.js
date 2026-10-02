@@ -9,15 +9,18 @@
      alt      a short description for people who cannot see the image
      caption  the text shown under the photo (may be left as '')
 
+   A caption can contain a link:
+     caption: '<a href="https://example.com/article">Words to click</a>'
+
    Photos appear in the order they are listed here. */
 window.PHOTOS = [
-  { src: 'from-tuoitre-news-article.jpg', alt: 'Son teaching for VietAI', caption: 'https://tuoitre.vn/chay-cung-tri-tue-nhan-tao-20181221082128707.htm' },
+  { src: 'from-tuoitre-news-article.jpg', alt: 'Son teaching for VietAI', caption: '<a href="https://tuoitre.vn/chay-cung-tri-tue-nhan-tao-20181221082128707.htm"> Teaching for VietAI (From tuoitre.vn)</a> ' },
+  { src: 'Urbanmetry-Bus-NPT.jpg', alt: 'Presenting at ASB about Bus ridership model', caption: '<a href="https://www.linkedin.com/posts/urbanplanning-publictransportation-dataanalytics-ugcPost-7257974864702025728-pby1/"> Presenting at ASB on Bus ridership model</a>'},
+  { src: 'ASB-talk3.jpg', alt: 'Presenting at ASB about Bus ridership model', caption: 'Presenting at ASB on Bus ridership model'},
+  { src: 'ASB-talk2.jpg', alt: 'Presenting at ASB about Bus ridership model', caption: 'Presenting at ASB on Bus ridership model'},
+  { src: 'ASB-talk4.jpg', alt: 'Presenting at ASB about Bus ridership model', caption: 'Presenting at ASB on Bus ridership model'},
+  { src: 'ASB-talk5.jpg', alt: 'Presenting at ASB about Bus ridership model', caption: 'Presenting at ASB on Bus ridership model'},
   { src: 'placeholder-01.svg', alt: 'Placeholder landscape in blue tones', caption: 'Placeholder photo 1' },
   { src: 'placeholder-02.svg', alt: 'Placeholder landscape in orange tones', caption: 'Placeholder photo 2' },
   { src: 'placeholder-03.svg', alt: 'Placeholder landscape in green tones', caption: 'Placeholder photo 3' },
-  { src: 'placeholder-04.svg', alt: 'Placeholder landscape in violet tones', caption: 'Placeholder photo 4' },
-  { src: 'placeholder-05.svg', alt: 'Placeholder landscape in rose tones', caption: 'Placeholder photo 5' },
-  { src: 'placeholder-06.svg', alt: 'Placeholder landscape in teal tones', caption: 'Placeholder photo 6' },
-  { src: 'placeholder-07.svg', alt: 'Placeholder landscape in golden tones', caption: 'Placeholder photo 7' },
-  { src: 'placeholder-08.svg', alt: 'Placeholder landscape in indigo tones', caption: 'Placeholder photo 8' },
 ];

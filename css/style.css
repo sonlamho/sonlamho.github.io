@@ -635,22 +635,31 @@ select {
   padding-bottom: 72px;
 }
 
-.thumb {
-  display: block;
-  width: 100%;
-  padding: 0;
+.photo {
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
-  text-align: left;
-  cursor: zoom-in;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.thumb:hover {
+.photo:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow);
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+/* Drawn inside the photo, since the card clips anything outside it. */
+.thumb:focus-visible {
+  outline-offset: -2px;
 }
 
 .thumb img {
@@ -660,12 +669,12 @@ select {
   background: var(--line);
 }
 
-.thumb .caption {
-  display: block;
+.photo .caption {
   padding: 10px 14px 12px;
   color: var(--ink-2);
   font-size: 0.92rem;
   line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .gallery-empty {
@@ -728,6 +737,14 @@ select {
   padding: 14px 20px 20px;
   color: #e1e0d9;
   text-align: center;
+}
+
+.lightbox-caption a {
+  color: inherit;
+}
+
+.lightbox-caption a:focus-visible {
+  outline-color: #fff;
 }
 
 .lightbox-button {

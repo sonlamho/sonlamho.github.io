@@ -30,6 +30,17 @@
       : PHOTO_FOLDER + photo.src;
   }
 
+  /* Captions may contain HTML such as a link; this gives the words alone. */
+  function plainText(html) {
+    var holder = document.createElement('div');
+    holder.innerHTML = html || '';
+    return holder.textContent.trim();
+  }
+
+  function altText(photo, index) {
+    return photo.alt || plainText(photo.caption) || 'Photo ' + (index + 1);
+  }
+
   if (photos.length === 0) {
     var empty = document.createElement('p');
     empty.className = 'gallery-empty';
@@ -40,6 +51,7 @@
 
   photos.forEach(function (photo, index) {
     var item = document.createElement('li');
+    item.className = 'photo';
     var button = document.createElement('button');
     button.type = 'button';
     button.className = 'thumb';
@@ -47,23 +59,26 @@
 
     var img = document.createElement('img');
     img.src = photoUrl(photo);
-    img.alt = photo.alt || photo.caption || 'Photo ' + (index + 1);
+    img.alt = altText(photo, index);
     img.loading = 'lazy';
     img.decoding = 'async';
     button.appendChild(img);
-
-    if (photo.caption) {
-      var text = document.createElement('span');
-      text.className = 'caption';
-      text.textContent = photo.caption;
-      button.appendChild(text);
-    }
 
     button.addEventListener('click', function () {
       open(index);
     });
 
     item.appendChild(button);
+
+    /* The caption sits outside the button so that a link in it can be
+       followed. */
+    if (photo.caption) {
+      var text = document.createElement('p');
+      text.className = 'caption';
+      text.innerHTML = photo.caption;
+      item.appendChild(text);
+    }
+
     gallery.appendChild(item);
     thumbs.push(button);
   });
@@ -72,8 +87,8 @@
     current = (index + photos.length) % photos.length;
     var photo = photos[current];
     image.src = photoUrl(photo);
-    image.alt = photo.alt || photo.caption || 'Photo ' + (current + 1);
-    caption.textContent = photo.caption || '';
+    image.alt = altText(photo, current);
+    caption.innerHTML = photo.caption || '';
     count.textContent = (current + 1) + ' / ' + photos.length;
   }
 
