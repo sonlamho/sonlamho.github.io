@@ -20,7 +20,7 @@ window.PHOTOS = [
   { src: 'ASB-talk2.jpg', alt: 'Presenting at ASB about Bus ridership model', caption: 'Presenting at ASB on Bus ridership model'},
   { src: 'ASB-talk4.jpg', alt: 'Presenting at ASB about Bus ridership model', caption: 'Presenting at ASB on Bus ridership model'},
   { src: 'ASB-talk5.jpg', alt: 'Presenting at ASB about Bus ridership model', caption: 'Presenting at ASB on Bus ridership model'},
-  { src: 'placeholder-01.svg', alt: 'Placeholder landscape in blue tones', caption: 'Placeholder photo 1' },
-  { src: 'placeholder-02.svg', alt: 'Placeholder landscape in orange tones', caption: 'Placeholder photo 2' },
-  { src: 'placeholder-03.svg', alt: 'Placeholder landscape in green tones', caption: 'Placeholder photo 3' },
+  { src: 'placeholder-01.svg', alt: 'Placeholder landscape in blue tones', caption: '' },
+  { src: 'placeholder-02.svg', alt: 'Placeholder landscape in orange tones', caption: '' },
+  { src: 'placeholder-03.svg', alt: 'Placeholder landscape in green tones', caption: '' },
 ];
